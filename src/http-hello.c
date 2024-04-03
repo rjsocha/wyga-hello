@@ -28,6 +28,12 @@ void handle_request(struct http_request_s* request) {
     int i = 0;
     i += snprintf(buf, 8192, "%s", HELLO);
     http_response_body(response, buf, i);
+  } else if (request_target_is(request, "/ping")) {
+    http_response_status(response, 200);
+    http_response_header(response, "Content-Type", "text/html");
+    int i = 0;
+    i += snprintf(buf, 8192, "%s\n", "PONG");
+    http_response_body(response, buf, i);
   } else {
     http_response_status(response, 200);
     http_response_header(response, "Content-Type", "text/plain");
